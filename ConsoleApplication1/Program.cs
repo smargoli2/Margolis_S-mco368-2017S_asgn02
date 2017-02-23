@@ -26,7 +26,7 @@ namespace ConsoleApplication1
             computers[nextSpace++] = myPC;
            
             int choice = menu();
-            while (choice < 6)
+            while (choice < 6 && choice > 0)
             {
                 switch (choice)
                 {
@@ -94,7 +94,8 @@ namespace ConsoleApplication1
             Console.WriteLine("Manage your computers\n1. Add a computer\n2. Save you prototype computer\n" +
                 "3. View summary of a computer\n4. View stats on all computers in your system \n5. View stats on a subset of computers" +
                "\n6. Exit ");
-            return Console.Read();
+            int choice = Console.Read();
+            return choice;
         }
 
         public static Computer addNewComputer()
@@ -185,7 +186,7 @@ namespace ConsoleApplication1
             }
             for (int p = 0; p < licenses.Length; p++)
             {
-
+                licenses[p] /= installed[p];//divide programs installed by all licenses
             }
             return licenses;
         }
