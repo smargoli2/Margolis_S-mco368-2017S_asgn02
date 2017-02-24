@@ -40,7 +40,7 @@ namespace ConsoleApplication1
                         Console.WriteLine("Enter true if the device has an antenna, and false it not.");
                         prototype.HasAntenna = Boolean.Parse(Console.ReadLine());
                         Console.WriteLine("Enter the hard drive capacity.");
-                        prototype.DriveCapacity = Console.Read();
+                        prototype.DriveCapacity = double.Parse(Console.ReadLine());
                         Console.WriteLine("Enter values(-1 if the software isn't installed, or a value of 0 and up for number of licenses)" +
                             " for the licenses of your software, separated by the enter key.");
                         int?[] lics = new int?[5];
@@ -53,18 +53,17 @@ namespace ConsoleApplication1
                             }
                             else
                             {
-                                licenses[i] = Console.Read();
+                                licenses[i] = read;
                             }
                         }
 
                         prototype.Licenses = lics;
                         Console.WriteLine("Enter the size of the computer's RAM.");
-                        prototype.Ram = Console.Read();
+                        prototype.Ram = int.Parse(Console.ReadLine());
                         break;
                     case 3://view specs of a specific computer by array index
                         Console.WriteLine("Enter the list number of the computer (0 based).");
-                        string p = Console.ReadLine();
-                        int pos = int.Parse(p);
+                        int pos = int.Parse(Console.ReadLine());
                         Console.WriteLine(computers[pos] ?? prototype);//is null
                         break;
                     case 4://Summary of all computer statistics
@@ -72,7 +71,12 @@ namespace ConsoleApplication1
                         Console.WriteLine("Percent of computers that have an antenna: " + getPctAntennas(computers, 0, totalComputers, prototype));
                         Console.WriteLine("Average hard drive capacity: " + getHDCap(computers, 0, totalComputers, prototype));
                         Console.WriteLine("Average number of licenses for all computers: " + getAvgLicenses(computers, 0, totalComputers, prototype));
-                        Console.WriteLine("Average number of licenses for each program: " + getAvgProgramLicenses(computers, 0, totalComputers, prototype));
+                        string list = "";
+                        for (int j = 0; j < getAvgProgramLicenses(computers, 0, totalComputers, prototype).Length; j++)
+                        {
+                            list += "Average for license #" + j + ": " + getAvgProgramLicenses(computers, 0, totalComputers, prototype)[j];
+                        }
+                        Console.WriteLine("Average number of licenses for each program: " + list);
                         break;
                     case 5://summary of specific indexes
                         Console.WriteLine("Enter the start index and end index (base 1) separated by the enter key.");
@@ -82,7 +86,12 @@ namespace ConsoleApplication1
                         Console.WriteLine("Percent of computers that have an antenna: " + getPctAntennas(computers, start, end, prototype));
                         Console.WriteLine("Average hard drive capacity: " + getHDCap(computers, start, end, prototype));
                         Console.WriteLine("Average number of licenses for all computers: " + getAvgLicenses(computers, start, end, prototype));
-                        Console.WriteLine("Average number of licenses for each program: " + getAvgProgramLicenses(computers, start, end, prototype));
+                        string lst = "";//put values of array in a string, not the best way
+                        for (int j = 0; j < getAvgProgramLicenses(computers, 0, totalComputers, prototype).Length; j++)
+                        {
+                            lst += "Average for license #" + j + ": " + getAvgProgramLicenses(computers, 0, totalComputers, prototype)[j];
+                        }
+                        Console.WriteLine("Average number of licenses for each program: " + lst);
                         break;
                 }
                 Console.WriteLine("\n");
@@ -96,8 +105,8 @@ namespace ConsoleApplication1
             Console.WriteLine("Manage your computers\n1. Add a computer\n2. Save you prototype computer\n" +
                 "3. View summary of a computer\n4. View stats on all computers in your system \n5. View stats on a subset of computers" +
                "\n6. Exit ");
-            string c = Console.ReadLine();
-            int choice = int.Parse(c);
+
+            int choice = int.Parse(Console.ReadLine());
             return choice;
         }
 
@@ -144,8 +153,7 @@ namespace ConsoleApplication1
                 }
             }
             Console.WriteLine("Enter the size of the computer's RAM.");
-            string r = Console.ReadLine();
-            int ram = int.Parse(r);
+            int ram = int.Parse(Console.ReadLine());
 
             Computer pc = new Computer(id, ant, hd, licenses, ram);
             return pc;
