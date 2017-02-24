@@ -21,9 +21,9 @@ namespace ConsoleApplication1
                 id = value;
             }
         }
-        Boolean hasAntenna;
+        Boolean? hasAntenna;
 
-        public Boolean HasAntenna
+        public Boolean? HasAntenna
         {
             get
             {
@@ -34,9 +34,9 @@ namespace ConsoleApplication1
                 hasAntenna = value;
             }
         }
-        Double driveCapacity;
+        Double? driveCapacity;
 
-        public Double DriveCapacity
+        public Double? DriveCapacity
         {
             get
             {
@@ -71,7 +71,7 @@ namespace ConsoleApplication1
             get
             {
                 int notAvail = 0;
-                if (hasAntenna)
+                if (hasAntenna == true)//connat implicitly use with nullable
                 {
                     notAvail += 100;
                     for (int i = 0; i < licenses.Length; i++)
@@ -104,7 +104,7 @@ namespace ConsoleApplication1
             }
         }
 
-        public Computer(String id, Boolean hasAntenna, Double driveCap, int?[] licenses, int ram)
+        public Computer(String id, Boolean? hasAntenna, Double? driveCap, int?[] licenses, int ram)
         {
             this.id = id;
             this.hasAntenna = hasAntenna;
@@ -113,10 +113,15 @@ namespace ConsoleApplication1
             this.ram = ram;
         }
 
-        public String toString()
+        override public String ToString()
         {
+            string list = "";
+            for (int i = 0; i < licenses.Length; i++)
+            {
+                list += "License #" + i + ": " + licenses[i];
+            }
             return ("ID: " + id + "\nHas antenna: " + hasAntenna + "\nHard drive: " + driveCapacity
-                + "\nLicenses: " + licenses.ToString() + "\nRAM: " + ram);
+                + "\nLicenses: " + list + "\nRAM: " + ram);
         }
     }
 }
